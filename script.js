@@ -4,7 +4,11 @@ const message = document.getElementById('message');
 
 // Adicionar a imagem de fundo
 const backgroundImage = new Image();
-backgroundImage.src = 'dog.jpg'; // Substitua pelo caminho da sua imagem
+backgroundImage.src = 'path_to_your_background_image.jpg'; // Substitua pelo caminho da sua imagem
+
+// Adicionar sons
+const hitWallSound = new Audio('hit_wall.mp3'); // Substitua pelo caminho do seu som de batida na parede
+const hitPaddleSound = new Audio('hit_paddle.mp3'); // Substitua pelo caminho do seu som de batida na raquete
 
 const playerHeight = 100;
 const playerWidth = 10;
@@ -99,11 +103,13 @@ function update() {
     
     if (ball.y + ball.radius > canvas.height || ball.y - ball.radius < 0) {
         ball.dy *= -1;
+        hitWallSound.play();
     }
     
     if (ball.x - ball.radius < playerLeft.x + playerLeft.width &&
         ball.y > playerLeft.y && ball.y < playerLeft.y + playerLeft.height) {
         ball.dx *= -1;
+        hitPaddleSound.play();
     } else if (ball.x - ball.radius < 0) {
         playerRight.score++;
         resetBall();
@@ -112,6 +118,7 @@ function update() {
     if (ball.x + ball.radius > playerRight.x &&
         ball.y > playerRight.y && ball.y < playerRight.y + playerRight.height) {
         ball.dx *= -1;
+        hitPaddleSound.play();
     } else if (ball.x + ball.radius > canvas.width) {
         playerLeft.score++;
         resetBall();
