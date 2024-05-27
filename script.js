@@ -10,6 +10,10 @@ backgroundImage.src = 'path_to_your_background_image.jpg'; // Substitua pelo cam
 const hitWallSound = new Audio('hit_wall.mp3'); // Substitua pelo caminho do seu som de batida na parede
 const hitPaddleSound = new Audio('hit_paddle.mp3'); // Substitua pelo caminho do seu som de batida na raquete
 
+// Adicionar música de fundo
+const backgroundMusic = new Audio('background_music.mp3'); // Substitua pelo caminho do seu som de música de fundo
+backgroundMusic.loop = true; // Configurar para tocar em loop
+
 const playerHeight = 100;
 const playerWidth = 10;
 const playerSpeed = 6;
@@ -77,9 +81,11 @@ function draw() {
 function update() {
     if (playerLeft.score >= winningScore) {
         message.innerText = 'Player 1 venceu!';
+        backgroundMusic.pause(); // Pausar música quando o jogo termina
         return;
     } else if (playerRight.score >= winningScore) {
         message.innerText = 'Player 2 venceu!';
+        backgroundMusic.pause(); // Pausar música quando o jogo termina
         return;
     }
 
@@ -172,5 +178,6 @@ document.addEventListener('keyup', function(e) {
 
 // Carregar a imagem de fundo e iniciar o jogo
 backgroundImage.onload = function() {
+    backgroundMusic.play(); // Iniciar música de fundo quando o jogo começa
     gameLoop();
 }
